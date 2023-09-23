@@ -1,0 +1,14 @@
+{
+    "name": "tractor",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "@types/node": ">=20.0.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.2.2"
+    }
+}
