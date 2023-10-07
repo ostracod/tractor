@@ -37,6 +37,8 @@ Tractor has the following design goals:
 
 To learn more about Tractor, please consult these pages:
 
-TODO: Add documentation pages.
+* [Evaluation Order](languageDocumentation/evaluation.md)
+
+TODO: Add more documentation pages.
 
 
