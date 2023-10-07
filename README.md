@@ -38,6 +38,7 @@ Tractor has the following design goals:
 To learn more about Tractor, please consult these pages:
 
 * [Evaluation Order](languageDocumentation/evaluation.md)
+* [Memory Model](languageDocumentation/memory.md)
 
 TODO: Add more documentation pages.
 

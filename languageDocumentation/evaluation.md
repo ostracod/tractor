@@ -25,7 +25,7 @@ Values and types are also associated with a time suit, which determines the eval
 Some categories of items have time suit restrictions. For example:
 
 * Types and macros cannot be run-suit, because the runtime environment has no representation of types or macros.
-* Items imported from foreign (non-Tractor) code cannot be comp-suit, because the Tractor compiler does not inspect the content of foreign code.
+* Values imported from foreign (non-Tractor) code cannot be comp-suit, because the Tractor compiler does not read values in foreign code.
 
 When Tractor code references an item with an incompatible time suite, many operations on the item are forbidden. For example:
 
