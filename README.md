@@ -39,6 +39,7 @@ To learn more about Tractor, please consult these pages:
 
 * [Evaluation Order](languageDocumentation/evaluation.md)
 * [Memory Model](languageDocumentation/memory.md)
+* [Data Types](languageDocumentation/types.md)
 
 TODO: Add more documentation pages.
 
