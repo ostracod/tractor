@@ -28,7 +28,7 @@ Each variable has a "constraint type", which is the type of the variable when re
 
 * The storage type associated with the keyword of the variable
 * The boundary type of the variable, if the variable has a boundary type
-* The constraint type of the initialization item, if the variable has an initialization item
+* The basic constraint type of the initialization item, if the variable has an initialization item
 
 Furthermore, the constraint type of a variable conforms to `~mutT` during prep-phase.
 
