@@ -25,9 +25,9 @@ A "basic type" describes the kind of information which an item represents, indep
 * `unionT` is the type of a union. A union can also store one or more fields, but the fields overlap because they all start at the same memory address.
 * `invocT` is the type of an invocable. Invocables are able to be invoked with one or more arguments, and return an item.
 * `macroT` is the type of a macro. When a macro is invoked, the body of the macro is expanded inline.
-* `prepMacroT` is the type of a macro which accepts arguments known during prep-phase.
-* `flowInvocT` is the type of an invocable which accepts arguments known during flow-phase.
-* `flowMacroT` is the type of a macro which accepts arguments known during flow-phase.
+* `prepMacroT` is the type of a prep-macro. Prep-macros accept arguments known during prep-phase.
+* `flowInvocT` is the type of a flow-invocable. Flow-invocables accept arguments known during flow-phase.
+* `flowMacroT` is the type of a flow-macro. Flow-macros accept arguments known during flow-phase.
 * `funcT` is the type of a function. Only one copy of each function body is stored in the application. When a function is invoked, control flow jumps to the function body.
 * `labelT` is the type of a label. Labels mark statement positions within the body of an invocable.
 * `moduleT` is the type of a code file. Each module may export one or more variables.
@@ -82,6 +82,7 @@ Storage types have the following relationships:
 * `arrayT` conforms to a suit type if the element type conforms to the same suit type.
 * `structT` and `unionT` conform to a suit type if every field type conforms to the same suit type.
 * `frameT` and `fixedT` conform to `addrT`.
+* `defT` conforms to `~addrT`.
 * The element type of `ptrT` conforms to `addrT`.
 * `fixedT` conforms to `~frameT`.
 * `frameT` conforms to `~fixedT`.
