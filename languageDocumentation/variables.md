@@ -30,7 +30,7 @@ Each variable has a "constraint type", which is the type of the variable when re
 * The boundary type of the variable, if the variable has a boundary type
 * The basic constraint type of the initialization item, if the variable has an initialization item
 
-Furthermore, the constraint type of a variable conforms to `~mutT` during prep-phase.
+Variable constraint types must conform to `concreteT`. Furthermore, the constraint type of each variable will conform to `~mutT` during prep-phase.
 
 Neither comp-suit nor run-suit invocables can reference non-global variables in the parent scope during flow-phase.
 

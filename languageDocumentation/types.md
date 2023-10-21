@@ -36,7 +36,7 @@ A "basic type" describes the kind of information which an item represents, indep
 
 A "storage type" describes the manner in which an item is stored, and determines how the item may be accessed. Tractor has the following storage types:
 
-* `concreteT` is the type of an item which can be instantiated. Concrete items must have a well-defined memory arrangement.
+* `concreteT` is the type of an item which has a well-defined memory arrangement. All variable constraint types must conform to `concreteT`.
 * `mutT` is the type of a mutable item. Any byte in a mutable item may be changed after instantiation.
 * `compSuitT` is the type of a comp-suit item. The content of comp-suit items is known at comptime.
 * `runSuitT` is the type of a run-suit item. The content of run-suit items is known at runtime.
@@ -67,11 +67,10 @@ Basic types have the following relationships:
 
 Storage types have the following relationships:
 * `uInt8T`, `uInt16T`, `uInt32T`, `uInt64T`, `sInt8T`, `sInt16T`, `sInt32T`, and `sInt64T` conform to `concreteT`.
-* `voidT`, `labelT`, and `moduleT` also conform to `concreteT`.
+* `typeT`, `voidT`, `invocT`, `labelT`, and `moduleT` also conform to `concreteT`.
 * A `ptrT` conforms to `concreteT` if the element type conforms to `frameT` or `fixedT`.
 * A non-soft `arrayT` conforms to `concreteT` if the element type conforms to `concreteT`.
 * A non-soft `structT` and `unionT` conform to `concreteT` if every field type conforms to `concreteT`.
-* An `invocT` conforms to `concreteT` when the arguments and return type are well-defined.
 * If an `arrayT` conforms to `mutT`, then the element type conforms to `mutT`.
 * If a `structT` or `unionT` conforms to `mutT`, then every field type conforms to `mutT`.
 * `fixedT` and `defT` conform to `~mutT`.

@@ -26,7 +26,7 @@ Value literals have the following constraint types:
 * The constraint type of character literals is `uInt8T`.
 * The constraint type of string literals is `strT`.
 
-To create types which refer to specific values, use the `literalT` function. See the section on built-in functions for more details.
+To create types which refer to specific values, use the `literalT` special. See the section on specials for more details.
 
 Identifiers and keywords may contain the following characters:
 
