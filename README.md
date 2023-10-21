@@ -41,6 +41,7 @@ To learn more about Tractor, please consult these pages:
 * [Memory Model](languageDocumentation/memory.md)
 * [Data Types](languageDocumentation/types.md)
 * [Variables and Arguments](languageDocumentation/variables.md)
+* [Syntax](languageDocumentation/syntax.md)
 
 TODO: Add more documentation pages.
 
