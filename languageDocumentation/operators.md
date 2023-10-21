@@ -5,10 +5,13 @@ This page documents operators and specials in Tractor.
 
 ## Operators
 
+Supose that `$item1` and `$item2` are expressions with type `intT | ptrT`. The type of the following expressions is also `intT | ptrT`:
+
+* `$item1 + $item2` = Sum of `$item1` and `$item2`
+* `$item1 - $item2` = Difference between `$item1` and `$item2`
+
 Supose that `$int1` and `$int2` are expressions with type `intT`. The type of the following expressions is also `intT`:
 
-* `$int1 + $int2` = Sum of `$int1` and `$int2`
-* `$int1 - $int2` = Difference between `$int1` and `$int2`
 * `-$int1` = Negation of `$int1`
 * `$int1 * $int2` = Product of `$int1` and `$int2`
 * `$int1 / $int2` = Quotient when dividing `$int1` by `$int2`
