@@ -42,7 +42,7 @@ A "storage type" describes the manner in which an item is stored, and determines
 * `runSuitT` is the type of a run-suit item. The content of run-suit items is known at runtime.
 * `anySuitT` is the type of an any-suit item. The content of any-suit items is known at both comptime and runtime.
 * `addrT` is the type of an addressable item. Pointers may be created for addressable items.
-* `frameT` is the type of an item stored in a stack frame. The stack is stored in RAM.
+* `ramT` is the type of an item stored in RAM. RAM contains both the stack and the heap.
 * `fixedT` is the type of an item stored in the fixed data region. The fixed data region may be non-volatile on certain target platforms.
 
 ## Type Relationships
@@ -68,7 +68,7 @@ Basic types have the following relationships:
 Storage types have the following relationships:
 * `uInt8T`, `uInt16T`, `uInt32T`, `uInt64T`, `sInt8T`, `sInt16T`, `sInt32T`, and `sInt64T` conform to `concreteT`.
 * `typeT`, `voidT`, `invocT`, `labelT`, and `moduleT` also conform to `concreteT`.
-* A `ptrT` conforms to `concreteT` if the element type conforms to `frameT` or `fixedT`.
+* A `ptrT` conforms to `concreteT` if the element type conforms to `ramT` or `fixedT`.
 * A non-soft `arrayT` conforms to `concreteT` if the element type conforms to `concreteT`.
 * A non-soft `structT` and `unionT` conform to `concreteT` if every field type conforms to `concreteT`.
 * If an `arrayT` conforms to `mutT`, then the element type conforms to `mutT`.
@@ -80,10 +80,10 @@ Storage types have the following relationships:
 * `voidT`, `intT`, `ptrT`, and `invocT [anySuit]` conform to `anySuitT`.
 * `arrayT` conforms to a suit type if the element type conforms to the same suit type.
 * `structT` and `unionT` conform to a suit type if every field type conforms to the same suit type.
-* `frameT` and `fixedT` conform to `addrT`.
+* `ramT` and `fixedT` conform to `addrT`.
 * `defT` conforms to `~addrT`.
 * The element type of `ptrT` conforms to `addrT`.
-* `fixedT` conforms to `~frameT`.
-* `frameT` conforms to `~fixedT`.
+* `fixedT` conforms to `~ramT`.
+* `ramT` conforms to `~fixedT`.
 
 
