@@ -59,7 +59,7 @@ With regard to statement arguments and expression operands, bracket delimiters f
 * `<` and `>` may be used in any context which accepts `(` and `)`.
 * `<?` and `>` may be used in any context which accepts `<` and `>`.
 
-For example, given that the structure of a return statement is defined to be `return ($item)`, the form `return <$item>` is also valid.
+For example, given that the structure of a return statement is defined to be `ret ($item)`, the form `ret <$item>` is also valid.
 
 ## Statement Syntax
 

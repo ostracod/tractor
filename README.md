@@ -43,6 +43,7 @@ To learn more about Tractor, please consult these pages:
 * [Variables and Arguments](languageDocumentation/variables.md)
 * [Syntax](languageDocumentation/syntax.md)
 * [Operators and Specials](languageDocumentation/operators.md)
+* [Statements](languageDocumentation/statements.md)
 
 TODO: Add more documentation pages.
 
