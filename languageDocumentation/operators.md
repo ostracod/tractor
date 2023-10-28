@@ -126,7 +126,7 @@ Creates an array value whose elements are `$elems`.
 arrayT [$attrs] ($elemTypes)
 ```
 
-Creates an array type whose element types are `$elemTypes`. If `($elemTypes)` is excluded, then element types are determined by the `elemType` attribute statement.
+Creates an array type whose element types are `$elemTypes`. If `($elemTypes)` is excluded, then element types are determined by the `elemT` attribute statement.
 
 ### String Type Special:
 

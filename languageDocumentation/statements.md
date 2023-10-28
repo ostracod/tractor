@@ -161,6 +161,415 @@ Imports the built-in foreign module with name string `$name`, and otherwise uses
 
 ## Attribute Statements
 
-TODO: Write this section.
+Tractor has the following attribute statements:
+
+### Element Type Statements:
+
+```
+elemT <$type>
+```
+
+Valid contexts:
+
+* `array` special
+
+Asserts that the type of each element in the parent array value conforms to `$type`.
+
+```
+elemT ($type)
+```
+
+Valid contexts:
+
+* `arrayT` special
+
+Asserts that the type of each element in the parent array type conforms to `$type`.
+
+### Length Statements:
+
+```
+len <$len>
+```
+
+Valid contexts:
+
+* `array` special
+* `str` special
+
+Asserts that the number of elements in the parent sequence value is `$len`.
+
+```
+len ($len)
+```
+
+Valid contexts:
+
+* `arrayT` special
+* `strT` special
+
+Asserts that the number of elements in the parent sequence type is `$len`.
+
+### Arguments Statement:
+
+```
+args [$args]
+```
+
+Valid contexts:
+
+* `invocT`, `flowInvocT`, and `macroT` specials
+* `prepMacro` and `prepMacroT` specials
+* `flowMacro` and `flowMacroT` specials
+* `func` and `funcT` specials
+
+Declares the arguments which the parent invocable may accept.
+
+### Argument Statements:
+
+```
+$name <$type> [$attrs]
+```
+
+Valid contexts:
+
+* `args` statement in one of the following contexts:
+    * `prepMacro` special
+    * `flowMacro` special
+    * `func` special
+
+Declares an argument with name identifier `$name` and boundary type `$type`.
+
+```
+$name ($type) [$attrs]
+```
+
+Valid contexts:
+
+* `args` statement in one of the following contexts:
+    * `invocT`, `flowInvocT`, or `macroT` special
+    * `prepMacroT` special
+    * `flowMacroT` special
+    * `funcT` special
+
+Declares an argument with name identifier `$name` and boundary type `$type`.
+
+See the section on arguments for more details.
+
+### Return Type Statements:
+
+```
+retT <$type>
+```
+
+Valid contexts:
+
+* `prepMacro` special
+* `flowMacro` special
+* `func` special
+
+Asserts that the parent invocable value returns an item whose type conforms to `$type`. The default return type is `voidT` when `retT` is excluded.
+
+```
+retT ($type)
+```
+
+Valid contexts:
+
+* `invocT`, `flowInvocT`, and `macroT` special
+* `prepMacroT` special
+* `flowMacroT` special
+* `funcT` special
+
+Asserts that the parent invocable type returns an item whose type conforms to `$type`. The default return type is `voidT` when `retT` is excluded.
+
+### Suit Type Statements:
+
+```
+suitT <$suitType>
+```
+
+Valid contexts:
+
+* `prepMacro` special
+* `flowMacro` special
+* `func` special
+
+Asserts that the time suit of the parent invocable value is `$suitType`. `$suitType` must be `compSuitT`, `runSuitT`, or `anySuitT`.
+
+```
+suitT ($suitType)
+```
+
+Valid contexts:
+
+* `invocT`, `flowInvocT`, and `macroT` special
+* `prepMacroT` special
+* `flowMacroT` special
+* `funcT` special
+
+Asserts that the time suit of the parent invocable type is `$suitType`. `$suitType` must be `compSuitT`, `runSuitT`, or `anySuitT`.
+
+### Suit Shorthand Statements:
+
+Valid contexts:
+
+* `invocT`, `flowInvocT`, and `macroT` specials
+* `prepMacro` and `prepMacroT` specials
+* `flowMacro` and `flowMacroT` specials
+* `func` and `funcT` specials
+
+```
+compSuit
+```
+
+Equivalent to `suitT <compSuitT>`.
+
+```
+runSuit
+```
+
+Equivalent to `suitT <runSuitT>`.
+
+```
+anySuit
+```
+
+Equivalent to `suitT <anySuitT>`.
+
+### Fields Statements:
+
+Valid contexts:
+
+* `struct` and `structT` specials
+* `unionT` special
+
+```
+fields [$fields]
+```
+
+Declares fields which are stored in the parent data structure.
+
+```
+phantomFields [$fields]
+```
+
+Declares phantom fields which are associated with the parent data structure. Phantom fields do not occupy any memory in the parent data structure. The types of phantom fields are accessible, but phantom fields store no content.
+
+### Field Statements:
+
+```
+$name <$type> = ($initItem)
+```
+
+Valid contexts:
+
+* `fields` statement in `struct` special
+
+Declares a field with name identifier `$name`, boundary type `$type`, and initialization item `$initItem`. `<$type>` may be excluded.
+
+```
+<$name> <$type> = ($initItem)
+```
+
+Valid contexts:
+
+* `fields` statement in `struct` special
+
+Declares a field with name string `$name`, boundary type `$type`, and initialization item `$initItem`. `<$type>` may be excluded.
+
+```
+$name ($type)
+```
+
+Valid contexts:
+
+* `fields` and `phantomFields` statements in one of the following contexts:
+    * `structT` special
+    * `unionT` special
+
+Declares a field with name identifier `$name` and boundary type `$type`.
+
+```
+($name) ($type)
+```
+
+Valid contexts:
+
+* `fields` and `phantomFields` statements in one of the following contexts:
+    * `structT` special
+    * `unionT` special
+
+Declares a field with name string `$name` and boundary type `$type`.
+
+### Phantom Field Statements:
+
+Valid contexts:
+
+* `phantomFields` statement in `struct` special
+
+```
+$name <$type>
+```
+
+Declares a field with name identifier `$name` and boundary type `$type`.
+
+```
+<$name> <$type>
+```
+
+Declares a field with name string `$name` and boundary type `$type`.
+
+### Soft Statement:
+
+```
+soft
+```
+
+Valid contexts:
+
+* `structT` special
+* `unionT` special
+
+Asserts that the parent type contains an unknown number of fields. Even if the type defines particular fields, the type may contain additional fields which are not specified.
+
+### Pack Statements:
+
+```
+pack <$alignment>
+```
+
+Valid contexts:
+
+* `struct` special
+
+Asserts that the alignment of fields in the parent struct value is `$alignment`.
+
+```
+pack ($alignment)
+```
+
+Valid contexts:
+
+* `structT` special
+
+Asserts that the alignment of fields in the parent struct type is `$alignment`.
+
+### Export Statement:
+
+```
+export
+```
+
+Valid contexts:
+
+* Variable statement at top level of module
+* `tractorPath` and `tractorBuiltIn` statements
+* `foreignPath` and `foreignBuiltIn` statements
+* Variable statement in `vars` statement
+
+Asserts that the parent variable may be imported by other modules from the current module.
+
+### Variables Statements:
+
+```
+vars [$vars]
+```
+
+Valid contexts:
+
+* `tractorPath` and `tractorBuiltIn` statements
+* `foreignPath` and `foreignBuiltIn` statements
+
+Declares the variables to import from the external module.
+
+```
+exportVars [$vars]
+```
+
+* `moduleT` special
+
+Declares the variables which are exported from the parent module type.
+
+### Imported Variable Statements:
+
+```
+var $name1 as $name2 <$type> [$attrs]
+```
+
+Valid contexts:
+
+* `vars` statement in `tractorPath` or `tractorBuiltIn` statement
+
+Declares that the variable with name identifier `$name1` in the external module will be exposed with name identifier `$name2` in the current module, and has a type which conforms to `$type`. If `as $name2` is excluded, then the variable will use name identifier `$name1` in the current module. `<$type>` may be excluded.
+
+```
+prepFrame $name1 as $name2 <$type> [$attrs]
+```
+
+```
+prepFixed $name1 as $name2 <$type> [$attrs]
+```
+
+```
+prepDef $name1 as $name2 <$type> [$attrs]
+```
+
+```
+flowFrame $name1 as $name2 <$type> [$attrs]
+```
+
+```
+anyFrame $name1 as $name2 <$type> [$attrs]
+```
+
+```
+anyFixed $name1 as $name2 <$type> [$attrs]
+```
+
+```
+anyDef $name1 as $name2 <$type> [$attrs]
+```
+
+Valid contexts:
+
+* `vars` statement
+
+Declares an imported variable with the given phase-access and storage type, and otherwise uses the same rules as described above.
+
+### Exported Variable Statements:
+
+```
+prepFrame $name <$type>
+```
+
+```
+prepFixed $name <$type>
+```
+
+```
+prepDef $name <$type>
+```
+
+```
+flowFrame $name <$type>
+```
+
+```
+anyFrame $name <$type>
+```
+
+```
+anyFixed $name <$type>
+```
+
+```
+anyDef $name <$type>
+```
+
+Valid contexts:
+
+* `exportVars` statement
+
+Declares an exported variable with name identifier `$name`, boundary type `$type`, and the given phase-access and storage type.
 
 
