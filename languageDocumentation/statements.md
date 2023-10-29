@@ -7,7 +7,7 @@ This page documents behavior statements and attribute statements in Tractor.
 
 Tractor has the following behavior statements:
 
-### Variable Declaration Statements:
+### Variable Statements:
 
 ```
 prepFrame $name <$type> [$attrs] = <$initItem>
@@ -131,33 +131,19 @@ assert <$condition>
 
 Verifies whether `$condition` is true. If `$condition` is false, compilation will abort with an error message.
 
-### Tractor Import Statements:
+### Import Statements:
 
 ```
-tractorPath <$path> as $moduleName [$attrs]
+tractorImport <$path> as $moduleName [$attrs]
 ```
 
 Imports the Tractor module located at file path `$path` relative to the `src` directory in the current project. If `as $moduleName` is included, the module will be exposed as a prep-access variable with name identifier `$moduleName` in the current module.
 
 ```
-tractorBuiltIn <$name> as $moduleName [$attrs]
-```
-
-Imports the built-in Tractor module with name string `$name`, and otherwise uses the same rules as described above.
-
-### Foreign Import Statements:
-
-```
-foreignPath <$path> as $moduleName <$type> [$attrs]
+foreignImport <$path> as $moduleName <$type> [$attrs]
 ```
 
 Imports the foreign module located at file path `$path` relative to the `foreign` directory in the current project. If `as $moduleName` is included, the module will be exposed as a prep-access variable with name identifier `$moduleName` in the current module. If `<$type>` is included, the type of the module will be `$type`.
-
-```
-foreignBuiltIn <$name> as $moduleName <$type> [$attrs]
-```
-
-Imports the built-in foreign module with name string `$name`, and otherwise uses the same rules as described above.
 
 ## Attribute Statements
 
@@ -463,34 +449,26 @@ export
 Valid contexts:
 
 * Variable statement at top level of module
-* `tractorPath` and `tractorBuiltIn` statements
-* `foreignPath` and `foreignBuiltIn` statements
+* `tractorImport` statement
+* `foreignImport` statement
 * Variable statement in `vars` statement
 
 Asserts that the parent variable may be imported by other modules from the current module.
 
-### Variables Statements:
+### Variables Statement:
 
 ```
-vars [$vars]
+vars [$importVars]
 ```
 
 Valid contexts:
 
-* `tractorPath` and `tractorBuiltIn` statements
-* `foreignPath` and `foreignBuiltIn` statements
+* `tractorImport` statement
+* `foreignImport` statement
 
 Declares the variables to import from the external module.
 
-```
-exportVars [$vars]
-```
-
-* `moduleT` special
-
-Declares the variables which are exported from the parent module type.
-
-### Imported Variable Statements:
+### Import Variable Statements:
 
 ```
 var $name1 as $name2 <$type> [$attrs]
@@ -498,7 +476,7 @@ var $name1 as $name2 <$type> [$attrs]
 
 Valid contexts:
 
-* `vars` statement in `tractorPath` or `tractorBuiltIn` statement
+* `vars` statement in `tractorImport` statement
 
 Declares that the variable with name identifier `$name1` in the external module will be exposed with name identifier `$name2` in the current module, and has a type which conforms to `$type`. If `as $name2` is excluded, then the variable will use name identifier `$name1` in the current module. `<$type>` may be excluded.
 
@@ -536,7 +514,17 @@ Valid contexts:
 
 Declares an imported variable with the given phase-access and storage type, and otherwise uses the same rules as described above.
 
-### Exported Variable Statements:
+### Exports Statement:
+
+```
+exports [$exportVars]
+```
+
+* `moduleT` special
+
+Declares the variables which are exported from the parent module type.
+
+### Export Variable Statements:
 
 ```
 prepFrame $name <$type>
@@ -568,7 +556,7 @@ anyDef $name <$type>
 
 Valid contexts:
 
-* `exportVars` statement
+* `exports` statement
 
 Declares an exported variable with name identifier `$name`, boundary type `$type`, and the given phase-access and storage type.
 

@@ -26,7 +26,7 @@ Value literals have the following constraint types:
 * The constraint type of character literals is `uInt8T`.
 * The constraint type of string literals is `ptrT(strT [len ($len)] & ramT)`, where `$len` is the length of the string.
 
-To create types which refer to specific values, use the `literalT` special. See the section on specials for more details.
+To create types which refer to specific values, use the `literalT` flow-macro. See the section on built-in invocables for more details.
 
 Identifiers and keywords may contain the following characters:
 

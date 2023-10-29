@@ -246,12 +246,4 @@ moduleT [$attrs]
 
 Creates a module type whose variables are described by `$attrs`.
 
-### Literal Type Special:
-
-```
-literalT ($item)
-```
-
-Creates a type which only contains items equal to `$item`. For example, `literalT(16)` is the type of all integers which are equal to 16.
-
 
