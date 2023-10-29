@@ -66,7 +66,7 @@ Returns the number of elements which `type` contains. For example, `len(arrayT [
 
 Returns the element type of `type`. For example, `elemT(arrayT(uInt16T))` returns `uInt16T`.
 
-### Field Functions:
+### Field Invocables:
 
 **Identifier:** `fieldNameT`  
 **Type:** `funcT [compSuit, args [type <?structT | unionT>], retT <?ptrT(strT)>]`
@@ -74,19 +74,19 @@ Returns the element type of `type`. For example, `elemT(arrayT(uInt16T))` return
 Returns the type of field names in `type`. For example, `fieldNameT(structT [fields [first (boolT), second (nullT)]])` returns `<literalT>("first") | <literalT>("second")`.
 
 **Identifier:** `fieldName`  
-**Type:** `funcT [compSuit, args [type <?structT | unionT>, index (uInt64T)], retT (ptrT(strT))]`
+**Type:** `flowMacroT [compSuit, args [type <?structT | unionT>, index (uInt64T)], retT (fieldNameT<?type>)]`
 
-Returns the name of a field in `type`. For example, `fieldName(structT [fields [first (boolT), second (nullT)]], 0)` returns `"first"`.
+Returns the name of a field in `type`. For example, `<fieldName>(structT [fields [first (boolT), second (nullT)]], 0)` returns `"first"`.
 
 **Identifier:** `fieldT`  
-**Type:** `funcT [compSuit, args [type <?structT | unionT>, name (ptrT(strT))], retT (typeT)]`
+**Type:** `flowMacroT [compSuit, args [type <?structT | unionT>, name (fieldNameT<?type>)], retT (typeT)]`
 
-Returns the type of a field in `type`. For example, `fieldT(structT [fields [first (boolT), second (nullT)]], "second")` returns `nullT`.
+Returns the type of a field in `type`. For example, `<fieldT>(structT [fields [first (boolT), second (nullT)]], "second")` returns `nullT`.
 
 **Identifier:** `fieldOffset`  
-**Type:** `funcT [compSuit, args [type <?structT | unionT>, name (ptrT(strT))], retT (uInt64T)]`
+**Type:** `flowMacroT [compSuit, args [type <?structT | unionT>, name (fieldNameT<?type>)], retT (uInt64T)]`
 
-Returns the number of bytes between the start of `type` and a field. For example, `fieldOffset(structT [fields [first (boolT), second (nullT)], pack (1)], "second")` returns 1.
+Returns the number of bytes between the start of `type` and a field. For example, `<fieldOffset>(structT [fields [first (boolT), second (nullT)], pack (1)], "second")` returns 1.
 
 ### Signature Functions:
 

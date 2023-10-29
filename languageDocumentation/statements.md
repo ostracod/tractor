@@ -113,7 +113,7 @@ Stops the current iteration of the parent `while` statement, and jumps to the be
 ret ($item)
 ```
 
-Stops evaluation of the parent invocable, and returns `$item`. If `($item)` is excluded, then the return item is `void`.
+Stops evaluation of the parent invocable, and returns `$item`. If `($item)` is excluded, then the return item is void.
 
 ### Halt Statement:
 
