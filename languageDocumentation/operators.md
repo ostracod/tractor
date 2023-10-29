@@ -103,7 +103,7 @@ Tractor has the following specials:
 ### Pointer Specials:
 
 ```
-ptr ($ref)
+ptr [$attrs] ($ref)
 ```
 
 Creates a pointer value which references `$ref`.
@@ -123,10 +123,10 @@ array [$attrs] ($elems)
 Creates an array value whose elements are `$elems`.
 
 ```
-arrayT [$attrs] ($elemTypes)
+arrayT [$attrs] ($elemType)
 ```
 
-Creates an array type whose element types are `$elemTypes`. If `($elemTypes)` is excluded, then element types are determined by the `elemT` attribute statement.
+Creates an array type whose element types are `$elemTypes`. If `($elemTypes)` is excluded, the element type will be `itemT`.
 
 ### String Type Special:
 

@@ -115,6 +115,14 @@ ret ($item)
 
 Stops evaluation of the parent invocable, and returns `$item`. If `($item)` is excluded, then the return item is `void`.
 
+### Halt Statement:
+
+```
+halt
+```
+
+Stops compilation or runtime of the application.
+
 ### Entry Point Statement:
 
 ```
@@ -122,14 +130,6 @@ entryPoint {$behavior}
 ```
 
 Declares the entry point of the current application. When the application launches, `$behavior` will run. Each application must define exactly one entry point.
-
-### Assert Statement:
-
-```
-assert <$condition>
-```
-
-Verifies whether `$condition` is true. If `$condition` is false, compilation will abort with an error message.
 
 ### Import Statements:
 
@@ -149,7 +149,7 @@ Imports the foreign module located at file path `$path` relative to the `foreign
 
 Tractor has the following attribute statements:
 
-### Element Type Statements:
+### Element Type Statement:
 
 ```
 elemT <$type>
@@ -157,19 +157,10 @@ elemT <$type>
 
 Valid contexts:
 
+* `ptr` special
 * `array` special
 
-Asserts that the type of each element in the parent array value conforms to `$type`.
-
-```
-elemT ($type)
-```
-
-Valid contexts:
-
-* `arrayT` special
-
-Asserts that the type of each element in the parent array type conforms to `$type`.
+Asserts that the type of each element in the parent value conforms to `$type`.
 
 ### Length Statements:
 
@@ -266,7 +257,7 @@ Valid contexts:
 * `flowMacroT` special
 * `funcT` special
 
-Asserts that the parent invocable type returns an item whose type conforms to `$type`. The default return type is `voidT` when `retT` is excluded.
+Asserts that the parent invocable type returns an item whose type conforms to `$type`. The default return type is `itemT` when `retT` is excluded.
 
 ### Suit Type Statements:
 

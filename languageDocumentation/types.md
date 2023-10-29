@@ -44,6 +44,7 @@ A "storage type" describes the manner in which an item is stored, and determines
 * `addrT` is the type of an addressable item. Pointers may be created for addressable items.
 * `ramT` is the type of an item stored in RAM. RAM contains both the stack and the heap.
 * `fixedT` is the type of an item stored in the fixed data region. The fixed data region may be non-volatile on certain target platforms.
+* `defT` is the type of an item which is copied inline every time the item is referenced. Definitions are not stored in RAM or the fixed data region.
 
 ## Type Relationships
 
