@@ -11,7 +11,7 @@ Tractor includes the following built-in items:
 * `true` = True boolean value
 * `false` = False boolean value
 * `itemT`, `typeT`, `valueT`, `voidT`, `nullT`, and `labelT` = Basic types as described earlier in this documentation
-* `intT`, `uIntT`, `sIntT`, `int8T`, `int16T`, `int32T`, `int64T`, `uInt8T`, `uInt16T`, `uInt32T`, `uInt64T`, `sInt8T`, `sInt16T`, `sInt32T`, `sInt64T`, and `boolT` = Integer types as described earlier in this documentation
+* `intT`, `uIntT`, `sIntT`, `int8T`, `int16T`, `int32T`, `int64T`, `uInt8T`, `uInt16T`, `uInt32T`, `uInt64T`, `sInt8T`, `sInt16T`, `sInt32T`, `sInt64T`, `boolT`, and `charT` = Integer types as described earlier in this documentation
 * `concreteT`, `mutT`, `compSuitT`, `runSuitT`, `anySuitT`, `addrT`, `ramT`, and `fixedT` = Storage types as described earlier in this documentation
 
 ## Built-In Invocables
@@ -66,7 +66,7 @@ Returns the number of elements which `type` contains. For example, `len(arrayT [
 
 Returns the element type of `type`. For example, `elemT(arrayT(uInt16T))` returns `uInt16T`.
 
-### Field Invocables:
+### Field Functions:
 
 **Identifier:** `fieldNameT`  
 **Type:** `funcT [compSuit, args [type <?structT | unionT>], retT <?ptrT(strT)>]`
@@ -74,19 +74,19 @@ Returns the element type of `type`. For example, `elemT(arrayT(uInt16T))` return
 Returns the type of field names in `type`. For example, `fieldNameT(structT [fields [first (boolT), second (nullT)]])` returns `<literalT>("first") | <literalT>("second")`.
 
 **Identifier:** `fieldName`  
-**Type:** `flowMacroT [compSuit, args [type <?structT | unionT>, index (uInt64T)], retT (fieldNameT<?type>)]`
+**Type:** `funcT [compSuit, args [type <?structT | unionT>, index (uInt64T)], retT (ptrT(strT))]`
 
-Returns the name of a field in `type`. For example, `<fieldName>(structT [fields [first (boolT), second (nullT)]], 0)` returns `"first"`.
+Returns the name of a field in `type`. For example, `fieldName(structT [fields [first (boolT), second (nullT)]], 0)` returns `"first"`.
 
 **Identifier:** `fieldT`  
-**Type:** `flowMacroT [compSuit, args [type <?structT | unionT>, name (fieldNameT<?type>)], retT (typeT)]`
+**Type:** `funcT [compSuit, args [type <?structT | unionT>, name (ptrT(strT))], retT (typeT)]`
 
-Returns the type of a field in `type`. For example, `<fieldT>(structT [fields [first (boolT), second (nullT)]], "second")` returns `nullT`.
+Returns the type of a field in `type`. For example, `fieldT(structT [fields [first (boolT), second (nullT)]], "second")` returns `nullT`.
 
 **Identifier:** `fieldOffset`  
-**Type:** `flowMacroT [compSuit, args [type <?structT | unionT>, name (fieldNameT<?type>)], retT (uInt64T)]`
+**Type:** `funcT [compSuit, args [type <?structT | unionT>, name (ptrT(strT))], retT (uInt64T)]`
 
-Returns the number of bytes between the start of `type` and a field. For example, `<fieldOffset>(structT [fields [first (boolT), second (nullT)], pack (1)], "second")` returns 1.
+Returns the number of bytes between the start of `type` and a field. For example, `fieldOffset(structT [fields [first (boolT), second (nullT)], pack (1)], "second")` returns 1.
 
 ### Signature Functions:
 

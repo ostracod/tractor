@@ -23,7 +23,7 @@ Value literals include the following:
 Value literals have the following constraint types:
 
 * The constraint type of integer literals is `uIntT8`, `uInt16`, `uInt32`, or `uInt64` depending on the size of the integer.
-* The constraint type of character literals is `uInt8T`.
+* The constraint type of character literals is `charT`.
 * The constraint type of string literals is `ptrT(strT [len ($len)] & ramT)`, where `$len` is the length of the string.
 
 To create types which refer to specific values, use the `literalT` flow-macro. See the section on built-in invocables for more details.

@@ -17,10 +17,11 @@ A "basic type" describes the kind of information which an item represents, indep
 * `uInt8T`, `uInt16T`, `uInt32T`, and `uInt64T` are the types of unsigned integers with the given number of bits.
 * `sInt8T`, `sInt16T`, `sInt32T`, and `sInt64T` are the types of signed integers with the given number of bits.
 * `boolT` is the type of a boolean value. Booleans may be true or false.
+* `charT` is the type of a character. Characters use ASCII encoding.
 * `ptrT` is the type of a pointer. A pointer stores the address of an item in memory.
 * `nullT` is the type of a null pointer. Null represents a missing item.
 * `arrayT` is the type of an array. An array can store one or more elements, each having a common type.
-* `strT` is the type of a string. A string is an array of `uInt8T` characters ending with `0x00`.
+* `strT` is the type of a string. A string is an array of `charT` ending with `0x00`.
 * `structT` is the type of a struct. A struct can store one or more fields, each having a distinct name and type. The fields do not overlap each other in memory.
 * `unionT` is the type of a union. A union can also store one or more fields, but the fields overlap because they all start at the same memory address.
 * `invocT` is the type of an invocable. Invocables are able to be invoked with one or more arguments, and return an item.
@@ -59,9 +60,9 @@ Basic types have the following relationships:
 * `uInt16T` and `sInt16T` conform to `int16T`.
 * `uInt32T` and `sInt32T` conform to `int32T`.
 * `uInt64T` and `sInt64T` conform to `int64T`.
-* `boolT` conforms to `uInt8T`.
+* `boolT` and `charT` conform to `uInt8T`.
 * `nullT` conforms to `ptrT`.
-* `strT` conforms to `arrayT(uInt8T)`.
+* `strT` conforms to `arrayT(charT)`.
 * `macroT` and `flowInvocT` conform to `invocT`.
 * `prepMacroT` and `flowMacroT` conform to `macroT`.
 * `flowMacroT` and `funcT` conform to `flowInvocT`.
