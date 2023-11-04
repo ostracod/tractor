@@ -271,7 +271,7 @@ Valid contexts:
 * `flowMacro` special
 * `func` special
 
-Asserts that the time suit of the parent invocable value is `$suitType`. `$suitType` must be `compSuitT`, `runSuitT`, or `anySuitT`.
+Asserts that the time suit of the parent invocable value and its body is `$suitType`. `$suitType` must be `compSuitT`, `runSuitT`, or `anySuitT`.
 
 ```
 suitT ($suitType)
