@@ -40,18 +40,18 @@ anyDef myAnySuitFunc = <func [anySuit] {
     (myAnySuitFunc())
 }>
 
+-- Prep-phase always occurs during comptime. As a result, functions
+-- which are not comp-suit cannot be invoked during prep-phase.
+<myCompSuitFunc()> -- Does not throw an error.
+<myRunSuitFunc()> -- Throws an error.
+<myAnySuitFunc()> -- Does not throw an error.
+
 entryPoint {
     -- Flow-phase of the application entry point occurs during runtime. As a result, functions
     -- which are not run-suit cannot be invoked during flow-phase of the entry point.
     (myCompSuitFunc()) -- Throws an error.
     (myRunSuitFunc()) -- Does not throw an error.
     (myAnySuitFunc()) -- Does not throw an error.
-    
-    -- Prep-phase always occurs during comptime. As a result, functions
-    -- which are not comp-suit cannot be invoked during prep-phase.
-    <myCompSuitFunc()> -- Does not throw an error.
-    <myRunSuitFunc()> -- Throws an error.
-    <myAnySuitFunc()> -- Does not throw an error.
 }
 ```
 
@@ -96,6 +96,84 @@ entryPoint {
     flowFrame result7 = (@myFramePtr)
     -- `result8` stores 14.
     flowFrame result8 = (@myFixedPtr)
+}
+```
+
+The example below demonstrates import statements:
+
+```
+-- Imports the Tractor module with the path "src/moneyUtils.trtr" relative to the
+-- current project directory. The module "moneyUtils.trtr" is accessible through
+-- the variable `moneyUtils` in the current module. The type of `moneyUtils` depends
+-- on the content of "moneyUtils.trtr".
+tractorImport <"moneyUtils.trtr"> as moneyUtils
+
+-- Imports the variable `cook` from the Tractor module with the path
+-- "src/foodUtils.trtr" relative to the current project directory. `cook` is
+-- accessible through the variable `cookFood` in the current module. The type
+-- of `cookFood` depends on the content of "foodUtils.trtr".
+tractorImport <"foodUtils.trtr"> [vars [var cook as cookFood]]
+
+-- Imports the foreign module with the path "foreign/deviceUtils.h" relative to
+-- the current project directory. The module "deviceUtils.h" is accessible
+-- through the variable `deviceUtils` in the current module, and has the type
+-- specified by the `foreignImport` statement.
+foreignImport <"deviceUtils.h"> as deviceUtils <
+    moduleT [exports [
+        anyDef blinkLight <funcT [runSuit, args [], retT (voidT)]>
+    ]]
+>
+
+-- Imports the variable `defragment` from the foreign module with the path
+-- "foreign/fileUtils.h" relative to the current project directory. `defragment` is
+-- accessible through the variable `defragmentStorage` in the current module, and
+-- has the type specified by the `anyDef` statement.
+foreignImport <"fileUtils.h"> [vars [
+    anyDef defragment as defragmentStorage <funcT [runSuit, args [], retT (voidT)]>
+]
+
+-- Declares a variable which can be imported by other modules.
+anyFrame myExportVar [export] = <30>
+-- `myPrivateVar` cannot be imported by other modules, because
+-- it does not have an `export` attribute statement.
+anyFrame myPrivateVar = <31>
+
+entryPoint {
+    -- Invokes functions from the imported modules.
+    (<moneyUtils>.payTaxes())
+    (cookFood())
+    (<deviceUtils>.blinkLight())
+    (defragmentStorage())
+}
+```
+
+The example below demonstrates a primality test function which can be invoked at both comptime and runtime:
+
+```
+foreignImport <"print.h"> [vars [
+    -- Assume that `printBool` prints `value` at runtime.
+    anyDef printBool <funcT [runSuit, args [value (boolT)], retT (voidT)]>
+]
+
+-- Defines a function which returns whether `value` is prime. The function can
+-- be invoked at both comptime and runtime, because the function is any-suit.
+anyDef isPrime = <func [anySuit, args [value <uInt32T>], retT <boolT>] {
+    flowFrame factor <uInt32T & mutT> = (2)
+    while (factor #lt value) {
+        if (value % factor #eq 0) {
+            ret (false)
+        }
+        (factor += 1)
+    }
+    ret (true)
+}>
+
+-- Prints whether 123 is prime at comptime ("false").
+<<compSuitPrint>(isPrime(123))>
+
+entryPoint {
+    -- Prints whether 127 is prime at runtime ("true").
+    (printBool(isPrime(127)))
 }
 ```
 
