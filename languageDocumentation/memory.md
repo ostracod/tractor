@@ -21,10 +21,10 @@ In order to determine the size and arrangement of foreign structs, the Tractor c
 
 Tractor can store values in two memory regions:
 
-* The stack, which is part of RAM
+* RAM, which contains the stack
 * The "fixed data region", which may be non-volatile on certain target platforms
 
-The stack is mutable, while the fixed data region is immutable. Examples of fixed data regions include the following:
+RAM is mutable, while the fixed data region is immutable. Examples of fixed data regions include the following:
 
 * The PROGMEM space in an AVR microcontroller
 * Flash memory in a PIC microcontroller
@@ -34,6 +34,6 @@ On target platforms where RAM is abundant, the fixed data region may be in RAM, 
 
 The stack contains one or more frames, each of which stores the data of application variables. At the beginning of the stack's life cycle, the stack contains a single frame to store global variables. When a function is invoked, a new frame is added to the stack to store local variables of the function. When function invocation finishes, the frame is removed from the stack.
 
-At comptime, Tractor emulates a stack and a fixed data region. Because runtime and comptime have the same memory regions, functions can be shared more easily between evaluation times.
+At comptime, Tractor emulates RAM and a fixed data region. Because runtime and comptime have the same memory regions, functions can be shared more easily between evaluation times.
 
 

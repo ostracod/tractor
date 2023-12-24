@@ -503,7 +503,7 @@ Valid contexts:
 
 * `vars` statement
 
-Declares an imported variable with the given phase-access and storage type, and otherwise uses the same rules as described above.
+Declares an imported variable with the given phase access and storage type, and otherwise uses the same rules as described above.
 
 ### Exports Statement:
 
@@ -549,6 +549,6 @@ Valid contexts:
 
 * `exports` statement
 
-Declares an exported variable with name identifier `$name`, boundary type `$type`, and the given phase-access and storage type.
+Declares an exported variable with name identifier `$name`, boundary type `$type`, and the given phase access and storage type.
 
 
