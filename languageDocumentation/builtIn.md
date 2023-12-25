@@ -12,7 +12,7 @@ Tractor includes the following built-in items:
 * `false` = False boolean value
 * `itemT`, `typeT`, `valueT`, `voidT`, `nullT`, and `labelT` = Basic types as described earlier in this documentation
 * `intT`, `uIntT`, `sIntT`, `int8T`, `int16T`, `int32T`, `int64T`, `uInt8T`, `uInt16T`, `uInt32T`, `uInt64T`, `sInt8T`, `sInt16T`, `sInt32T`, `sInt64T`, `boolT`, and `charT` = Integer types as described earlier in this documentation
-* `concreteT`, `mutT`, `compSuitT`, `runSuitT`, `anySuitT`, `addrT`, `ramT`, and `fixedT` = Storage types as described earlier in this documentation
+* `concreteT`, `mutT`, `compSuitT`, `runSuitT`, `anySuitT`, `addrT`, `ramT`, `fixedT`, and `defT` = Storage types as described earlier in this documentation
 
 ## Built-In Invocables
 
@@ -93,7 +93,7 @@ Returns the number of bytes between the start of `type` and a field. For example
 **Identifier:** `argT`  
 **Type:** `funcT [compSuit, args [type <?invocT>, index (uInt64T)], retT (typeT)]`
 
-Returns the type of an argument in `type`. For example, `argT(funcT [args [first (boolT), second (nullT)]], 0)` returns `boolT`.
+Returns the boundary type of an argument in `type`. For example, `argT(funcT [args [first (boolT), second (nullT)]], 0)` returns `boolT`.
 
 **Identifier:** `retT`  
 **Type:** `funcT [compSuit, args [type <?invocT>], retT (typeT)]`

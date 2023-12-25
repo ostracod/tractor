@@ -59,7 +59,7 @@ Evaluates expression `$expr` to achieve a side-effect.
 {$behavior}
 ```
 
-Evaluates `$behavior` in a nested scope.
+Evaluates behavior statement sequence `$behavior` in a nested scope.
 
 ### Label Statement:
 
@@ -518,31 +518,31 @@ Declares the variables which are exported from the parent module type.
 ### Export Variable Statements:
 
 ```
-prepFrame $name <$type>
+prepFrame $name ($type)
 ```
 
 ```
-prepFixed $name <$type>
+prepFixed $name ($type)
 ```
 
 ```
-prepDef $name <$type>
+prepDef $name ($type)
 ```
 
 ```
-flowFrame $name <$type>
+flowFrame $name ($type)
 ```
 
 ```
-anyFrame $name <$type>
+anyFrame $name ($type)
 ```
 
 ```
-anyFixed $name <$type>
+anyFixed $name ($type)
 ```
 
 ```
-anyDef $name <$type>
+anyDef $name ($type)
 ```
 
 Valid contexts:

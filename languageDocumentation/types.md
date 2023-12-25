@@ -76,10 +76,11 @@ Storage types have the following relationships:
 * If an `arrayT` conforms to `mutT`, then the element type conforms to `mutT`.
 * If a `structT` or `unionT` conforms to `mutT`, then every field type conforms to `mutT`.
 * `fixedT` and `defT` conform to `~mutT`.
-* `typeT`, `invocT [compSuit]`, `labelT`, `moduleT`, and `anySuitT` conform to `compSuitT`.
+* `invocT [compSuit]` and `anySuitT` conform to `compSuitT`.
 * The types of foreign items conform to `~compSuitT`.
 * `invocT [runSuit]` and `anySuitT` conform to `runSuitT`.
-* `voidT`, `intT`, `ptrT`, and `invocT [anySuit]` conform to `anySuitT`.
+* `typeT`, `labelT`, and `moduleT` conform to `~runSuitT`.
+* `voidT` and `invocT [anySuit]` conform to `anySuitT`.
 * `arrayT` conforms to a suit type if the element type conforms to the same suit type.
 * `structT` and `unionT` conform to a suit type if every field type conforms to the same suit type.
 * `ramT` and `fixedT` conform to `addrT`.

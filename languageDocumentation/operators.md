@@ -46,7 +46,7 @@ Supose that `$bool1` and `$bool2` are expressions with type `boolT`. The type of
 * `$bool1 && $bool2` = Logical AND of `$bool1` and `$bool2`
 * `$bool1 ^^ $bool2` = Logical XOR of `$bool1` and `$bool2`
 
-Suppose that `$ptr` is an expression with type `ptrT($elemType)`. The type of the expression `@$ptr` is `$elemType`, and returns the item referenced by the pointer.
+Suppose that `$ptr` is an expression with type `ptrT($elemType)`. The expression `@$ptr` returns the item referenced by the pointer, and the type of `@$ptr` is `$elemType`.
 
 Tractor has the following member access operators:
 
@@ -87,7 +87,7 @@ Tractor has the following type operators:
     * `$type1` and `$type2` are expressions with type `typeT`.
     * The type of `$type1 & $type2` is also `typeT`.
 
-The expression `$ref = $item` assigns the return item of expression `$item` to reference `$ref`. The type of `$item` must conform to the type of `$ref`. `=` may be combined with various binary operators to assign the result of an operation between `$ref` and `$expr`. For example, `$ref += $item` assigns `$ref + $item` to `$ref`. The list of all composite assignment operators is below:
+The expression `$ref = $item` assigns the return item of expression `$item` to reference `$ref`. The basic type of `$item` must conform to the basic type of `$ref`. `=` may be combined with various binary operators to assign the result of an operation between `$ref` and `$expr`. For example, `$ref += $item` assigns `$ref + $item` to `$ref`. The list of all composite assignment operators is below:
 
 * `+=`, `-=`, `*=`, `/=`, and `%=` perform assignment with arithmetic operation.
 * `|=`, `&=`, and `^=` perform assignment with bitwise operation.
@@ -126,7 +126,7 @@ Creates an array value whose elements are `$elems`.
 arrayT [$attrs] ($elemType)
 ```
 
-Creates an array type whose element types are `$elemTypes`. If `($elemTypes)` is excluded, the element type will be `itemT`.
+Creates an array type whose element type is `$elemType`. If `($elemType)` is excluded, the element type will be `itemT`.
 
 ### String Type Special:
 

@@ -21,7 +21,7 @@ In order to determine the size and arrangement of foreign structs, the Tractor c
 
 Tractor can store values in two memory regions:
 
-* RAM, which contains the stack
+* RAM, which contains the stack and the heap
 * The "fixed data region", which may be non-volatile on certain target platforms
 
 RAM is mutable, while the fixed data region is immutable. Examples of fixed data regions include the following:
