@@ -120,7 +120,7 @@ tractorImport <"foodUtils.trtr"> [vars [var cook as cookFood]]
 -- specified by the `foreignImport` statement.
 foreignImport <"deviceUtils.h"> as deviceUtils <
     moduleT [exports [
-        anyDef blinkLight <funcT [runSuit, args [], retT (voidT)]>
+        anyDef blinkLight (funcT [runSuit, args [], retT (voidT)])
     ]]
 >
 
@@ -130,7 +130,7 @@ foreignImport <"deviceUtils.h"> as deviceUtils <
 -- has the type specified by the `anyDef` statement.
 foreignImport <"fileUtils.h"> [vars [
     anyDef defragment as defragmentStorage <funcT [runSuit, args [], retT (voidT)]>
-]
+]]
 
 -- Declares a variable which can be imported by other modules.
 anyFrame myExportVar [export] = <30>
@@ -147,14 +147,11 @@ entryPoint {
 }
 ```
 
+For the remainder of the examples on this page, assume that `runSuitPrint` is an imported foreign flow-macro, and prints the argument value during runtime.
+
 The example below demonstrates a primality test function which can be invoked at both comptime and runtime:
 
 ```
-foreignImport <"print.h"> [vars [
-    -- Assume that `printBool` prints `value` at runtime.
-    anyDef printBool <funcT [runSuit, args [value (boolT)], retT (voidT)]>
-]
-
 -- Defines a function which returns whether `value` is prime. The function can
 -- be invoked at both comptime and runtime, because the function is any-suit.
 anyDef isPrime = <func [anySuit, args [value <uInt32T>], retT <boolT>] {
@@ -173,7 +170,87 @@ anyDef isPrime = <func [anySuit, args [value <uInt32T>], retT <boolT>] {
 
 entryPoint {
     -- Prints whether 127 is prime at runtime ("true").
-    (printBool(isPrime(127)))
+    (<runSuitPrint>(isPrime(127)))
+}
+```
+
+The example below demonstrates usage of arrays and pointers:
+
+```
+-- Sorts the array `nums` in ascending order.
+anyDef bubbleSort = <func [anySuit, args [
+    nums <ptrT(arrayT(uInt16T) & ramT & mutT)>
+    numsLen <uInt8T>
+]] {
+    flowFrame index <uInt8T & mutT> = (1)
+    while (true) {
+        flowFrame isSorted <mutT> = (true)
+        while (index #lt numsLen) {
+            flowFrame num1 = ((@nums)@(index - 1))
+            flowFrame num2 = ((@nums)@index)
+            if (num1 #gt num2) {
+                ((@nums)@(index - 1) = num2)
+                ((@nums)@index = num1)
+                (isSorted = false)
+            }
+            (index += 1)
+        }
+        if (isSorted) {
+            break
+        }
+    }
+}>
+
+entryPoint {
+    -- Defines an array containing some elements.
+    flowFrame numArray <mutT> = (array [elemT <uInt16T>] (743, 179, 785, 799, 471, 224))
+    anyDef arrayLen = <len<?numArray>:<uInt8T>>
+    -- Sorts the array in-place.
+    (bubbleSort(ptr(numArray), arrayLen)
+    -- Prints the sorted array.
+    flowFrame index <uInt8T & mutT> = (0)
+    while (index #lt arrayLen) {
+        (<runSuitPrint>(numArray@index))
+        (index += 1)
+    }
+}
+```
+
+The example below demonstrates usage of structs and unions:
+
+```
+entryPoint {
+    -- Defines a "user" struct type containing three fields.
+    -- Struct fields do not share any bytes in memory.
+    prepDef userT = <structT [fields [
+        name (ptrT(strT & ramT))
+        score (uInt32T)
+        isAdmin (boolT)
+    ]]>
+    -- Creates an instance of a user.
+    flowFrame user <userT> = (struct [fields [
+        name = ("Bob")
+        score = (10)
+        isAdmin = (false)
+    ]])
+    (<runSuitPrint>(user.name)) -- Prints "Bob".
+    (<runSuitPrint>(user.score)) -- Prints "10".
+    (<runSuitPrint>(user.isAdmin)) -- Prints "false".
+    
+    -- Defines a "mixed" union type containing two fields. Every field of a union begins
+    -- at the same memory address, so union fields share one or more bytes.
+    prepDef mixedT = <unionT [fields [
+        bigInt (sInt64T)
+        smallInts (arrayT [len (3)] (sInt16T))
+    ]]>
+    -- Creates an instance of the mixed union type.
+    flowFrame mixed <mixedT & mutT>
+    (mixed.bigInt = 1234567)
+    (<runSuitPrint>(mixed.bigInt)) -- Prints "1234567".
+    (mixed.smallInts = array [elemT (sInt16T)] (100, 200, 300))
+    (<runSuitPrint>(mixed.smallInts@0)) -- Prints "100".
+    (<runSuitPrint>(mixed.smallInts@1)) -- Prints "200".
+    (<runSuitPrint>(mixed.smallInts@2)) -- Prints "300".
 }
 ```
 
