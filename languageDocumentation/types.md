@@ -60,6 +60,8 @@ Basic types have the following relationships:
 * `uInt16T` and `sInt16T` conform to `int16T`.
 * `uInt32T` and `sInt32T` conform to `int32T`.
 * `uInt64T` and `sInt64T` conform to `int64T`.
+* `uInt8T` conforms to `uInt16T`, `uInt16T` conforms to `uInt32T`, and `uInt32T` conforms to `uInt64T`.
+* `sInt8T` conforms to `sInt16T`, `sInt16T` conforms to `sInt32T`, and `sInt32T` conforms to `sInt64T`.
 * `boolT` and `charT` conform to `uInt8T`.
 * `nullT` conforms to `ptrT`.
 * `strT` conforms to `arrayT(charT)`.
@@ -67,7 +69,31 @@ Basic types have the following relationships:
 * `prepMacroT` and `flowMacroT` conform to `macroT`.
 * `flowMacroT` and `funcT` conform to `flowInvocT`.
 
+Composite types have the following relationships:
+
+* Suppose that `T1` and `T2` conform to `ptrT`, but not `ptrT(mutT)`. `T1` conforms to `T2` if all of the following conditions are true:
+    * The element type of `T1` conforms to the element type of `T2`.
+    * The element types of `T1` and `T2` have the same memory arrangement.
+* Suppose that `T1` and `T2` conform to `ptrT(mutT)`. `T1` conforms to `T2` only if `T1` and `T2` have identical element types.
+* Suppose that `T1` and `T2` conform to `arrayT`. `T1` conforms to `T2` if all of the following conditions are true:
+    * `T1` and `T2` have the same length.
+    * The element type of `T1` conforms to the element type of `T2`.
+* Suppose that `T1` and `T2` conform to `structT`. `T1` conforms to `T2` if all of the following conditions are true:
+    * `T1` and `T2` have the same field names.
+    * The field types of `T1` conform to the field types of `T2`.
+* Suppose that `T1` and `T2` conform to `unionT`. `T1` conforms to `T2` if all of the following conditions are true:
+    * `T1` and `T2` have the same field names.
+    * The field types of `T1` conform to the field types of `T2`.
+    * The field types of `T1` and `T2` have the same memory arrangements.
+* Suppose that `T1` and `T2` conform to `funcT`. `T1` conforms to `T2` if all of the following conditions are true:
+    * `T1` and `T2` accept the same number of arguments.
+    * The argument types of `T2` conform to the argument types of `T1`.
+    * The argument types of `T1` and `T2` have the same memory arrangements.
+    * The return type of `T1` conforms to the return type of `T2`.
+    * The return types of `T1` and `T2` have the same memory arrangement.
+
 Storage types have the following relationships:
+
 * `uInt8T`, `uInt16T`, `uInt32T`, `uInt64T`, `sInt8T`, `sInt16T`, `sInt32T`, and `sInt64T` conform to `concreteT`.
 * `typeT`, `voidT`, `invocT`, `labelT`, and `moduleT` also conform to `concreteT`.
 * A `ptrT` conforms to `concreteT` if the element type conforms to `ramT` or `fixedT`.
