@@ -67,16 +67,14 @@ Tractor has the following member access operators:
     * `$identifier` is an identifier.
     * The type of `<$module>.$identifier` is the type of the variable.
 
-Tractor has the following type operators:
+Suppose that `$item` is an expression with type `itemT`, and `$type` is an expression with type `typeT`. The type of the following expressions is `$type`:
 
-* `$item:<$type>` = Cast of `$item` to `$type`
-    * `$item` is an expression with type `itemT`.
-    * `$type` is an expression with type `typeT`.
-    * The type of `$item:<$type>` is `$type`.
-* `$item::<$type>` = Force cast of `$item` to `$type`
-    * `$item` is an expression with type `itemT`.
-    * `$type` is an expression with type `typeT`.
-    * The type of `$item::<$type>` is `$type`.
+* `$item:<$type>` = Safe type conversion of `$item` to `$type`
+* `$item::<$type>` = Proximate type conversion of `$item` to `$type`
+* `$item:::<$type>` = Dangerous type conversion of `$item` to `$type`
+
+Tractor has the following type manipulation operators:
+
 * `~$storageType` = Complement of `$storageType`
     * `$storageType` is an expression which returns a storage type.
     * `~$storageType` also returns a storage type.

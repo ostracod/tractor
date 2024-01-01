@@ -204,7 +204,7 @@ anyDef bubbleSort = <func [anySuit, args [
 entryPoint {
     -- Defines an array containing some elements.
     flowFrame numArray <mutT> = (array [elemT <uInt16T>] (743, 179, 785, 799, 471, 224))
-    anyDef arrayLen = <len<?numArray>:<uInt8T>>
+    anyDef arrayLen = <len<?numArray>::<uInt8T>>
     -- Sorts the array in-place.
     (bubbleSort(ptr(numArray), arrayLen)
     -- Prints the sorted array.

@@ -115,4 +115,57 @@ Storage types have the following relationships:
 * `fixedT` conforms to `~ramT`.
 * `ramT` conforms to `~fixedT`.
 
+## Type Conversion
+
+Tractor has three varieties of type conversion:
+
+* "Safe" type conversion does not violate any type relationships, and preserves all data.
+    * Occurs explicitly when using the safe type conversion operator (`:`)
+    * Occurs implicitly when the operand of a statement or expression has a different type than expected
+    * May add well-defined padding to data
+* "Proximate" type conversion may convert data between types which are related, but not strictly compatible.
+    * Only occurs explicitly when using the proximate type conversion operator (`::`)
+    * Disregards nominal typing
+    * May truncate data
+* "Dangerous" type conversion ignores type restrictions to the greatest extent possible.
+    * Only occurs explicitly when using the dangerous type conversion operator (`:::`)
+    * May reinterpret bytes as an unrelated type
+    * May cause pointers to reference malformed data
+    * May add undefined padding to data
+
+Safe conversion from type `T1` to type `T2` is permitted only when `T1` conforms to `T2`.
+
+Proximate conversion from type `T1` to type `T2` is permitted in the following scenarios:
+
+* All scenarios in which safe type conversion is allowed.
+* `T1` and `T2` conform to `intT`.
+* `T1` conforms to `ptrT($elemT1)`, `T2` conforms to `ptrT($elemT2)`, and all of the following conditions are true:
+    * Proximate conversion is allowed from `$elemT1` to `$elemT2`.
+    * The memory arrangement of `$elemT1` is compatible with that of `$elemT2`.
+* `T1` conforms to `arrayT [len ($len1)] ($elemT1)`, `T2` conforms to `arrayT [len ($len2)] ($elemT2)`, and all of the following conditions are true:
+    * `$len2` is not larger than `$len1`.
+    * Proximate conversion is allowed from `$elemT1` to `$elemT2`.
+* `T1` and `T2` conform to `structT`, and all of the following conditions are true:
+    * All field names in `T2` are also in `T1`.
+    * Proximate conversion is allowed from field types in `T1` to field types in `T2`.
+* `T1` and `T2` conform to `unionT`, and all of the following conditions are true:
+    * All field names in `T2` are also in `T1`.
+    * Proximate conversion is allowed from field types in `T1` to field types in `T2`.
+    * The memory arrangements of field types in `T1` are compatible with those of field types in `T2`.
+* `T1` conforms to `funcT [retT ($retT1)]`, `T2` conforms to `funcT [retT ($retT2)]`, and all of the following conditions are true:
+    * `T1` and `T2` accept the same number of arguments.
+    * Proximate conversion is allowed from argument types in `T2` to argument types in `T1`.
+    * Proximate conversion is allowed from `$retT1` to `$retT2`.
+    * The memory arrangements of argument types in `T2` are compatible with those of argument types in `T1`.
+    * The memory arrangement of `$retT1` is compatible with that of `$retT2`.
+
+Dangerous conversion from type `T1` to type `T2` is permitted in the following scenarios:
+
+* All scenarios in which proximate type conversion is allowed.
+* `T1` and `T2` conform to `intT | ptrT | invocT | typeT | labelT | moduleT`.
+    * For example: `T1` conforms to `intT`, and `T2` conforms to `ptrT`.
+* `T1` conforms to `arrayT($elemT1)`, `T2` conforms to `arrayT($elemT2)`, and dangerous conversion is allowed from `$elemT1` to `$elemT2`.
+* `T1` and `T2` conform to `structT`, and dangerous conversion is allowed from field types in `T1` to field types in `T2`.
+* `T1` and `T2` conform to `unionT`.
+
 
