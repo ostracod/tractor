@@ -254,6 +254,58 @@ entryPoint {
 }
 ```
 
+The example below demonstrates usage of phantom fields and soft types:
+
+```
+entryPoint {
+    -- Defines a struct type which has a phantom field.
+    prepDef myStructT = <structT [
+        fields [x (sInt32T)]
+        phantomFields [y (charT)]
+    ]>
+    -- Does not throw an error, because the struct conforms to `myStructT`.
+    flowFrame myStruct1 <myStructT> = (structT [
+        fields [x <sInt32T> = (111)]
+        phantomFields [y <charT>]
+    ])
+    -- Throws an error, because the struct does not conform to `myStructT`.
+    -- The phantom field `y` has an incompatible type.
+    flowFrame myStruct2 <myStructT> = (structT [
+        fields [x <sInt32T> = (222)]
+        phantomFields [y <nullT>]
+    ])
+    <<compSuitPrint>(fieldT(myStructT, "y"))> -- Prints "charT".
+    (<runSuitPrint>(myStruct1.x)) -- Prints "111".
+    -- Throws an error, because phantom fields do not store any items.
+    (<runSuitPrint>(myStruct1.y))
+    
+    -- Defines a soft struct type. Structs which conform to `animalT`
+    -- may contain additional fields after `name` and `legCount`.
+    prepDef animalT = <structT [soft, fields [
+        name (ptrT(strT & ramT))
+        legCount (uInt16T)
+    ]]>
+    -- Does not throw an error, because the struct conforms to `animalT`.
+    flowFrame dog <animalT> = (struct [fields [
+        name = ("dog")
+        legCount = (4)
+        isFriendly = (true)
+    ]])
+    -- Throws an error, because the struct does not conform to `animalT`.
+    -- The field `legCount` is missing in the struct.
+    flowFrame car <animalT> = (struct [fields [
+        name = ("car")
+        wheelCount = (4)
+        topSpeed = (120)
+    ]])
+    flowFrame dogPtr = (ptr(dog):<ptrT(animalT & ramT)>)
+    (<runSuitPrint>((@dogPtr).legCount)) -- Prints "4".
+    (<runSuitPrint>(dog.isFriendly)) -- Prints "true".
+    -- Throws an error, because the field `isFriendly` does not exist in `animalT`.
+    (<runSuitPrint>((@dogPtr).isFriendly))
+}
+```
+
 TODO: Add more example code.
 
 

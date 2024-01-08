@@ -98,7 +98,7 @@ Storage types have the following relationships:
 * `typeT`, `voidT`, `invocT`, `labelT`, and `moduleT` also conform to `concreteT`.
 * A `ptrT` conforms to `concreteT` if the element type conforms to `ramT` or `fixedT`.
 * A non-soft `arrayT` conforms to `concreteT` if the element type conforms to `concreteT`.
-* A non-soft `structT` and `unionT` conform to `concreteT` if every field type conforms to `concreteT`.
+* A non-soft `structT` and `unionT` conform to `concreteT` if every non-phantom field type conforms to `concreteT`.
 * If an `arrayT` conforms to `mutT`, then the element type conforms to `mutT`.
 * If a `structT` or `unionT` conforms to `mutT`, then every field type conforms to `mutT`.
 * `fixedT` and `defT` conform to `~mutT`.
